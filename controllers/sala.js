@@ -7,10 +7,23 @@ const addCantSillas =async (req,res)=>{
 
 
     try {
+        const verifySala = await Sala.findByPk(1)
+
+        if(verifySala){
+            await verifySala.update({ asientos: array}, {
+                where: {
+                 id: 1
+                }
+              });
+    
+             return res.json({
+                array
+            })
+        }
         
         const sala = Sala.build({asientos:array});
         await sala.save()
-        res.json({
+        return res.json({
             array
         })
     } catch (error) {
